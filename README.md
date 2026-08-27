@@ -1,8 +1,8 @@
 # Stats SA Mafikeng Field Office (Mahikeng)
 
-CMPG 325 Computer Networks individual project portfolio for the client design review.
+CMPG 325 Computer Networks individual project portfolio for **Milestone 1 - Client Design Review**.
 
-This repository is prepared for **Milestone 1 - Client Design Review**. I used the attached project brief and marking guideline screenshots as the assignment source material, then separated those instructions from the actual submission items required for this milestone.
+This repository intentionally contains only the five items requested for Milestone 1. The attached project brief and marking guideline screenshots were treated as assignment source material, not as extra user instructions or extra deliverables.
 
 ## Project Details
 
@@ -19,22 +19,17 @@ This repository is prepared for **Milestone 1 - Client Design Review**. I used t
 | Design constraint | Secure all device administration |
 | Simulation tool | Cisco Packet Tracer |
 
-## Milestone 1 Review Pack
+## Milestone 1 Deliverables
 
-The required Milestone 1 items are ready in this repository:
+| No. | Required item | File |
+| --- | --- | --- |
+| 1 | Client Requirements | [client-requirements.md](client-requirements.md) |
+| 2 | Physical Topology | [physical-topology.md](physical-topology.md) |
+| 3 | Logical Topology | [logical-topology.md](logical-topology.md) |
+| 4 | IP Addressing Plan | [ip-addressing-plan.md](ip-addressing-plan.md) |
+| 5 | Initial GitHub Repository | [README.md](README.md) |
 
-1. [Client Requirements](docs/client-requirements.md)
-2. [Physical Topology](docs/physical-topology.md)
-3. [Logical Topology](docs/logical-topology.md)
-4. [IP Addressing Plan](docs/ip-addressing-plan.md)
-5. [Initial GitHub Repository](docs/repository-overview.md)
-
-I also added supporting review evidence so the marker can quickly see how the submission lines up with the rubric:
-
-- [Milestone 1 Client Design Review](docs/milestone-1-client-design-review.md)
-- [Marking Guideline Alignment](docs/marking-guideline-alignment.md)
-- [Design Decision Log](docs/design-decision-log.md)
-- [Testing and Evidence Plan](docs/testing-and-evidence-plan.md)
+No Packet Tracer file, configuration exports, evidence screenshots, or final video files are included in this milestone because those belong to later project stages.
 
 ## Design Summary
 
@@ -47,26 +42,10 @@ The CCTV change request is handled as a real design requirement, not as an add-o
 ```text
 .
 |-- README.md
-|-- SUBMISSION_CHECKLIST.md
-|-- configs/
-|   `-- README.md
-|-- docs/
-|   |-- client-requirements.md
-|   |-- design-decision-log.md
-|   |-- ip-addressing-plan.md
-|   |-- logical-topology.md
-|   |-- marking-guideline-alignment.md
-|   |-- milestone-1-client-design-review.md
-|   |-- physical-topology.md
-|   |-- repository-overview.md
-|   |-- testing-and-evidence-plan.md
-|   `-- diagrams/
-|       |-- logical-topology.mmd
-|       `-- physical-topology.mmd
-|-- evidence/
-|   `-- README.md
-`-- packet-tracer/
-    `-- README.md
+|-- client-requirements.md
+|-- physical-topology.md
+|-- logical-topology.md
+`-- ip-addressing-plan.md
 ```
 
 ## GitHub Repository Status
@@ -76,9 +55,9 @@ The CCTV change request is handled as a real design requirement, not as an add-o
 | Repository URL | [CMPG-325-stats-sa-mafikeng-network](https://github.com/kudzaimudzingwa40-cmd/CMPG-325-stats-sa-mafikeng-network) |
 | Remote name | `origin` |
 | Active branch | `main` |
-| Portfolio status | Milestone 1 review pack created and organized for later milestones |
+| Portfolio status | Limited to the five Milestone 1 deliverables |
 
-Before submission, open the GitHub link and confirm that the Markdown files and Mermaid topology diagrams render correctly. Then submit the GitHub repository link on eFundi according to the Milestone 1 instructions.
+Before submission, open the GitHub link and confirm that the repository shows only these five files and that the Markdown topology diagrams render correctly. Then submit the GitHub repository link on eFundi according to the Milestone 1 instructions.
 
 Useful local checks:
 

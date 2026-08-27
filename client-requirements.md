@@ -19,10 +19,10 @@ Project name: **Stats SA Mafikeng Field Office (Mahikeng)**
 | Milestone 1 requirement | Repository response | Status |
 | --- | --- | --- |
 | Client Requirements | This document defines the client needs, constraints, assumptions, design responses, and acceptance criteria. | Ready |
-| Physical Topology | `docs/physical-topology.md` documents the field-office device layout, access switches, services, CCTV area, WAN edge, and link types. | Ready |
-| Logical Topology | `docs/logical-topology.md` documents VLANs, inter-VLAN routing, NAT, security policy, and CCTV isolation. | Ready |
-| IP Addressing Plan | `docs/ip-addressing-plan.md` documents the VLSM plan for `172.30.56.0/23`, including gateways, DHCP pools, static addresses, and spare ranges. | Ready |
-| Initial GitHub Repository | `docs/repository-overview.md` and the top-level `README.md` show the portfolio structure for Milestone 1 and later milestones. | Ready |
+| Physical Topology | `physical-topology.md` documents the field-office device layout, access switches, services, CCTV area, WAN edge, and link types. | Ready |
+| Logical Topology | `logical-topology.md` documents VLANs, inter-VLAN routing, NAT, security policy, and CCTV isolation. | Ready |
+| IP Addressing Plan | `ip-addressing-plan.md` documents the VLSM plan for `172.30.56.0/23`, including gateways, DHCP pools, static addresses, and spare ranges. | Ready |
+| Initial GitHub Repository | `README.md` shows the project details, repository status, and the five-file Milestone 1 submission structure. | Ready |
 
 ## Client Context
 
@@ -46,7 +46,7 @@ The design therefore uses VLANs, routing controls, NAT, and a dedicated manageme
 | Area | Assumption / boundary |
 | --- | --- |
 | Host counts | The design uses reasonable Packet Tracer host counts and keeps spare IP space for growth because exact staff counts are not provided in the screenshots. |
-| Services | DHCP, DNS, file/application services, printing, NVR, NAT, and management access are included because they are realistic for a field office and useful for later testing. |
+| Services | DHCP, DNS, file/application services, printing, NVR, NAT, and management access are included in the design because they are realistic for a field office and useful for later testing. |
 | Milestone 1 scope | This milestone is a design review. The Packet Tracer `.pkt` implementation, exported configs, screenshots, and final video evidence belong to later milestones. |
 | Security depth | Security is documented at design level now and will be proved later through ACLs, SSH access control, and testing screenshots. |
 | Source material | The screenshots are treated as assignment brief/rubric evidence, not as instructions that replace the user's request. |
@@ -63,8 +63,8 @@ The design therefore uses VLANs, routing controls, NAT, and a dedicated manageme
 | CR-06 | Must | Segment CCTV traffic. | Permit CCTV-to-NVR traffic and deny CCTV access to normal user VLANs. | CCTV ACL policy and placement are documented. |
 | CR-07 | Must | Secure device administration. | Use a management VLAN, SSH, encrypted passwords, and access restrictions. | Management VLAN and administrator access policy are documented. |
 | CR-08 | Must | Use the assigned IP block properly. | Apply VLSM to `172.30.56.0/23` with gateways, DHCP pools, static ranges, and spare blocks. | Full IP addressing plan is documented. |
-| CR-09 | Should | Produce a working Packet Tracer implementation later. | Use Packet Tracer-compatible routers, switches, servers, PCs, APs, and IP cameras. | Device choices and future evidence plan are documented. |
-| CR-10 | Must | Maintain a professional GitHub portfolio. | Store the design, diagrams, configs, Packet Tracer files, and evidence in organized folders. | Repository overview, README, and checklist are documented. |
+| CR-09 | Should | Produce a working Packet Tracer implementation later. | Use Packet Tracer-compatible routers, switches, servers, PCs, APs, and IP cameras. | Device choices are documented in the topology files. |
+| CR-10 | Must | Maintain a professional GitHub portfolio. | Keep the Milestone 1 repository limited to the five requested deliverables with clear Markdown formatting and consistent naming. | The repository root contains only the five Milestone 1 files. |
 
 ## Non-Functional Requirements
 
@@ -74,7 +74,7 @@ The design therefore uses VLANs, routing controls, NAT, and a dedicated manageme
 | Reliability | The office should have a clear point for routing and troubleshooting. | Keep inter-VLAN routing on SW-CORE and internet translation on R1. |
 | Manageability | A reviewer should be able to follow the network quickly. | Use consistent names, VLAN IDs, addressing, and documentation. |
 | Scalability | The design should allow moderate growth. | Keep spare address space and avoid using the full `/23` immediately. |
-| Evidence | The work must be easy to prove in later milestones. | Create directories for Packet Tracer, configs, testing screenshots, and troubleshooting notes. |
+| Evidence | The work must be easy to prove in later milestones. | Keep the Milestone 1 design clear enough to guide the later Packet Tracer build, configuration exports, screenshots, and troubleshooting notes. |
 
 ## Security Requirements
 
