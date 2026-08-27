@@ -38,7 +38,7 @@ This file shows how the Milestone 1 submission has been prepared to target the h
 | --- | --- |
 | Repository is well structured and professional | README, checklist, docs, diagrams, configs, packet-tracer, and evidence folders are created. |
 | Evidence is easy to navigate | `docs/repository-overview.md` describes where each evidence type belongs. |
-| Meaningful commit history | Initial commit created with the message `Add milestone 1 client design review`; future milestone commits should be added as work continues. |
+| Meaningful commit history | The repository contains Milestone 1 documentation commits; future milestone commits should be added as work continues. |
 | Excellent documentation | The repository contains separate, readable documents for requirements, topology, addressing, testing, design decisions, and rubric alignment. |
 
 ## Important Next Steps for 90 Percent Plus Final Portfolio Quality

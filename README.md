@@ -69,11 +69,20 @@ The CCTV change request is handled as a real design requirement, not as an add-o
     `-- README.md
 ```
 
-## GitHub Setup
+## GitHub Repository Status
 
-The local repository is already initialized on branch `main`. Add the actual GitHub remote URL that matches the project name you created on GitHub, then push:
+| Item | Status |
+| --- | --- |
+| Repository URL | [CMPG-325-stats-sa-mafikeng-network](https://github.com/kudzaimudzingwa40-cmd/CMPG-325-stats-sa-mafikeng-network) |
+| Remote name | `origin` |
+| Active branch | `main` |
+| Portfolio status | Milestone 1 review pack created and organized for later milestones |
+
+Before submission, open the GitHub link and confirm that the Markdown files and Mermaid topology diagrams render correctly. Then submit the GitHub repository link on eFundi according to the Milestone 1 instructions.
+
+Useful local checks:
 
 ```bash
-git remote add origin https://github.com/<username>/<your-github-repository-name>.git
-git push -u origin main
+git status --short --branch
+git log --oneline --decorate -5
 ```

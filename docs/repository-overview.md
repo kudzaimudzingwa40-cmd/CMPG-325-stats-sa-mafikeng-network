@@ -33,8 +33,10 @@ The repository is intentionally structured from Milestone 1 onward. That makes i
 | --- | --- |
 | Local repository initialized | Yes |
 | Current branch | `main` |
-| Initial commit created | Yes |
-| GitHub remote | Add the remote URL that matches the repository created on GitHub |
+| Remote | `origin` |
+| GitHub URL | `https://github.com/kudzaimudzingwa40-cmd/CMPG-325-stats-sa-mafikeng-network.git` |
+| Tracking branch | `main` tracks `origin/main` |
+| Commit history | Milestone 1 documentation commits are present |
 
 ## Repository Quality Measures
 
@@ -42,14 +44,14 @@ The repository is intentionally structured from Milestone 1 onward. That makes i
 - Documentation split into readable files instead of one crowded document.
 - Diagrams stored in both Markdown and reusable Mermaid source files.
 - Evidence folders prepared before implementation begins.
-- Commit history started with a meaningful Milestone 1 commit.
+- Commit history started with meaningful Milestone 1 documentation commits.
 - Future testing, troubleshooting, and screenshots have a clear place to go.
 
-## Recommended GitHub Commands
+## Recommended Local Checks
 
-Use the actual GitHub repository URL created for **Stats SA Mafikeng Field Office (Mahikeng)**:
+Use these commands before submission to confirm the working tree and recent commits:
 
 ```bash
-git remote add origin https://github.com/<username>/<your-github-repository-name>.git
-git push -u origin main
+git status --short --branch
+git log --oneline --decorate -5
 ```

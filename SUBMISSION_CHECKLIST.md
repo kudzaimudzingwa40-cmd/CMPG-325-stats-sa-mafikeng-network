@@ -24,8 +24,9 @@ Project name: **Stats SA Mafikeng Field Office (Mahikeng)**
 
 ## Final Checks Before Upload
 
-- [ ] Add the actual GitHub remote URL if it is not already configured.
-- [ ] Push the `main` branch to GitHub.
+- [x] GitHub remote URL is configured: `https://github.com/kudzaimudzingwa40-cmd/CMPG-325-stats-sa-mafikeng-network.git`
+- [x] Local branch `main` tracks `origin/main`.
 - [ ] Confirm that GitHub renders the Mermaid diagrams inside the topology Markdown files.
-- [ ] Confirm the repository name shown on GitHub matches **Stats SA Mafikeng Field Office (Mahikeng)** or the exact name required by the lecturer.
+- [ ] Confirm the repository is visible to the marker, or make it public/private with lecturer access as required.
+- [ ] Confirm the repository name shown on GitHub matches the lecturer's naming requirement.
 - [ ] Upload or submit the GitHub link according to the eFundi milestone instructions.

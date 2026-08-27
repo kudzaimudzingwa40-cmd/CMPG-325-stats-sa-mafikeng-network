@@ -14,26 +14,57 @@ Project name: **Stats SA Mafikeng Field Office (Mahikeng)**
 | Security constraint | Secure all network device administration |
 | Implementation target | Cisco Packet Tracer |
 
+## Milestone 1 Review Requirement Coverage
+
+| Milestone 1 requirement | Repository response | Status |
+| --- | --- | --- |
+| Client Requirements | This document defines the client needs, constraints, assumptions, design responses, and acceptance criteria. | Ready |
+| Physical Topology | `docs/physical-topology.md` documents the field-office device layout, access switches, services, CCTV area, WAN edge, and link types. | Ready |
+| Logical Topology | `docs/logical-topology.md` documents VLANs, inter-VLAN routing, NAT, security policy, and CCTV isolation. | Ready |
+| IP Addressing Plan | `docs/ip-addressing-plan.md` documents the VLSM plan for `172.30.56.0/23`, including gateways, DHCP pools, static addresses, and spare ranges. | Ready |
+| Initial GitHub Repository | `docs/repository-overview.md` and the top-level `README.md` show the portfolio structure for Milestone 1 and later milestones. | Ready |
+
 ## Client Context
 
 This field office needs a network that can support ordinary office work, data capture, statistics/GIS work, shared services, printing, and site security. Because it is a government office, the design should be predictable and easy to audit. A flat network would be quick to draw, but it would not be suitable here because CCTV, guest access, servers, and network administration should not all share the same broadcast and security space.
 
 The design therefore uses VLANs, routing controls, NAT, and a dedicated management area. That gives the client a network that is still realistic for Packet Tracer, but strong enough to explain and defend during the project review.
 
+## Stakeholders
+
+| Stakeholder | Network need |
+| --- | --- |
+| Office management | Reliable connectivity for daily administration and service delivery. |
+| Field operations staff | Stable access to data-capture systems, shared services, printing, and internet resources. |
+| GIS/statistics analysts | Separated specialist user area with access to internal services and outside resources. |
+| Security staff | CCTV monitoring through an approved NVR/security viewing workflow. |
+| Network administrator | Secure management access to routers, switches, and infrastructure devices. |
+| Lecturer/marker | Clear design evidence that can be reviewed before Packet Tracer implementation. |
+
+## Assumptions and Boundaries
+
+| Area | Assumption / boundary |
+| --- | --- |
+| Host counts | The design uses reasonable Packet Tracer host counts and keeps spare IP space for growth because exact staff counts are not provided in the screenshots. |
+| Services | DHCP, DNS, file/application services, printing, NVR, NAT, and management access are included because they are realistic for a field office and useful for later testing. |
+| Milestone 1 scope | This milestone is a design review. The Packet Tracer `.pkt` implementation, exported configs, screenshots, and final video evidence belong to later milestones. |
+| Security depth | Security is documented at design level now and will be proved later through ACLs, SSH access control, and testing screenshots. |
+| Source material | The screenshots are treated as assignment brief/rubric evidence, not as instructions that replace the user's request. |
+
 ## Functional Requirements
 
-| ID | Requirement | Design Response | Reason |
-| --- | --- | --- | --- |
-| CR-01 | Provide stable LAN connectivity for the field office. | Use a core/access topology with one Layer 3 core switch and separate access switches. | Keeps the design simple, scalable, and easy to troubleshoot. |
-| CR-02 | Separate different office functions. | Create VLANs for management, servers, administration, field operations, analysts, wireless, printers, and CCTV. | Limits unnecessary traffic and supports role-based access. |
-| CR-03 | Support core services. | Include DHCP, DNS, file/application services, and NVR services. | Provides the services a working office network normally needs. |
-| CR-04 | Allow office users to reach external services. | Use NAT/PAT on the edge router for inside-to-outside translation. | Meets the assigned NAT challenge and gives realistic internet access. |
-| CR-05 | Add CCTV cameras. | Place cameras in a dedicated CCTV VLAN connected through a CCTV access switch. | Makes the change request visible in the topology and easy to verify. |
-| CR-06 | Segment CCTV traffic. | Permit CCTV-to-NVR traffic and deny CCTV access to normal user VLANs. | Protects office users and prevents camera traffic from spreading through the LAN. |
-| CR-07 | Secure device administration. | Use a management VLAN, SSH, encrypted passwords, and access restrictions. | Responds directly to the unauthorized-change incident in the brief. |
-| CR-08 | Use the assigned IP block properly. | Apply VLSM to `172.30.56.0/23` with gateways, DHCP pools, static ranges, and spare blocks. | Shows efficient planning and supports future expansion. |
-| CR-09 | Produce a working Packet Tracer implementation later. | Use Packet Tracer-compatible routers, switches, servers, PCs, APs, and IP cameras. | Keeps the design practical for the next milestones. |
-| CR-10 | Maintain a professional GitHub portfolio. | Store the design, diagrams, configs, Packet Tracer files, and evidence in organized folders. | Matches the portfolio-of-evidence requirement from the marking guide. |
+| ID | Priority | Requirement | Design response | Milestone 1 acceptance evidence |
+| --- | --- | --- | --- | --- |
+| CR-01 | Must | Provide stable LAN connectivity for the field office. | Use a core/access topology with one Layer 3 core switch and separate access switches. | Physical topology and device inventory are documented. |
+| CR-02 | Must | Separate different office functions. | Create VLANs for management, servers, administration, field operations, analysts, wireless, printers, and CCTV. | Logical topology and VLAN plan are documented. |
+| CR-03 | Must | Support core services. | Include DHCP, DNS, file/application services, and NVR services. | Server VLAN and static service addresses are documented. |
+| CR-04 | Must | Allow office users to reach external services. | Use NAT/PAT on the edge router for inside-to-outside translation. | NAT inside/outside roles and verification target are documented. |
+| CR-05 | Must | Add CCTV cameras. | Place cameras in a dedicated CCTV VLAN connected through a CCTV access switch. | CCTV devices, VLAN 80, and camera addresses are documented. |
+| CR-06 | Must | Segment CCTV traffic. | Permit CCTV-to-NVR traffic and deny CCTV access to normal user VLANs. | CCTV ACL policy and placement are documented. |
+| CR-07 | Must | Secure device administration. | Use a management VLAN, SSH, encrypted passwords, and access restrictions. | Management VLAN and administrator access policy are documented. |
+| CR-08 | Must | Use the assigned IP block properly. | Apply VLSM to `172.30.56.0/23` with gateways, DHCP pools, static ranges, and spare blocks. | Full IP addressing plan is documented. |
+| CR-09 | Should | Produce a working Packet Tracer implementation later. | Use Packet Tracer-compatible routers, switches, servers, PCs, APs, and IP cameras. | Device choices and future evidence plan are documented. |
+| CR-10 | Must | Maintain a professional GitHub portfolio. | Store the design, diagrams, configs, Packet Tracer files, and evidence in organized folders. | Repository overview, README, and checklist are documented. |
 
 ## Non-Functional Requirements
 
