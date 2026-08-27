@@ -80,7 +80,7 @@ flowchart TB
 
 This layout is intentionally practical. A government field office does not need an overcomplicated enterprise core, but it does need a network that can be explained, tested, and secured. The core/access structure gives the office a clear physical layout: traffic moves from endpoint switches to SW-CORE, then to R1 when it needs outside access.
 
-The CCTV access switch is kept separate because the design requires segmented camera traffic. In a real building this also makes sense physically: cameras are often placed around entrances, corridors, and public areas, and grouping them helps with cabling, power, and troubleshooting.
+The CCTV access switch is kept separate because the design requires segmented camera traffic. In a real building this makes sense physically: cameras are often placed around entrances, corridors, and public areas, and grouping them helps with cabling, power, and troubleshooting.
 
 NAT is placed on R1 because that is the natural inside/outside boundary. SW-CORE stays focused on internal routing and VLAN policy, which keeps the network design clear and operationally manageable.
 
