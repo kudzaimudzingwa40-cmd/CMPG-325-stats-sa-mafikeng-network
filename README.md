@@ -10,7 +10,7 @@ Professional network design package for the Stats SA Mafikeng Field Office in Ma
 | Client | Stats SA Mafikeng Field Office |
 | Location | Mahikeng |
 | Project reference | CMPG 325 Computer Networks |
-| Internal address block | `172.30.56.0/23` |
+| Internal address block | `172.30.66.0/23` |
 | Simulation platform | Cisco Packet Tracer |
 
 ## Executive Summary
