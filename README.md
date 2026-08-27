@@ -1,41 +1,42 @@
-# Stats SA Mafikeng Field Office (Mahikeng)
+# Stats SA Mafikeng Field Office Network Design
 
-CMPG 325 Computer Networks individual project portfolio for **Milestone 1 - Client Design Review**.
-
-This repository intentionally contains only the five items requested for Milestone 1. The attached project brief and marking guideline screenshots were treated as assignment source material, not as extra user instructions or extra deliverables.
-
-## Project Details
+Professional network design package for the Stats SA Mafikeng Field Office in Mahikeng.
 
 | Item | Detail |
 | --- | --- |
-| Project name | Stats SA Mafikeng Field Office (Mahikeng) |
-| Course | CMPG 325 - Computer Networks |
-| Project ID | CMPG325-2026-097 |
-| Client | Stats SA Mafikeng Field Office (Mahikeng) |
-| Client type | Government field office |
-| Assigned address block | `172.30.56.0/23` |
-| Assigned networking challenge | NAT inside/outside address translation |
-| Client change request | Add CCTV cameras and segment CCTV traffic |
-| Design constraint | Secure all device administration |
-| Simulation tool | Cisco Packet Tracer |
+| Prepared by | Kudzai Mudzingwa |
+| Design status | Complete |
+| Project stage | Client Design Review |
+| Client | Stats SA Mafikeng Field Office |
+| Location | Mahikeng |
+| Project reference | CMPG 325 Computer Networks |
+| Internal address block | `172.30.56.0/23` |
+| Simulation platform | Cisco Packet Tracer |
 
-## Milestone 1 Deliverables
+## Executive Summary
 
-| No. | Required item | File |
-| --- | --- | --- |
-| 1 | Client Requirements | [client-requirements.md](client-requirements.md) |
-| 2 | Physical Topology | [physical-topology.md](physical-topology.md) |
-| 3 | Logical Topology | [logical-topology.md](logical-topology.md) |
-| 4 | IP Addressing Plan | [ip-addressing-plan.md](ip-addressing-plan.md) |
-| 5 | Initial GitHub Repository | [README.md](README.md) |
+This design provides a secure, structured network for a government field office that supports administration, field operations, statistical analysis, shared services, printing, wireless access, CCTV monitoring, and controlled internet access.
 
-No Packet Tracer file, configuration exports, evidence screenshots, or final video files are included in this milestone because those belong to later project stages.
+The proposed architecture uses an edge router for the WAN and NAT boundary, a Layer 3 core switch for inter-VLAN routing, and dedicated access switches for users, services, printers, wireless, and CCTV. CCTV traffic is isolated in its own VLAN, while device administration is protected through a dedicated management VLAN and SSH-based access control.
 
-## Design Summary
+## Design Package Contents
 
-Stats SA needs a field-office network that is reliable, easy to support, and careful with security. The design therefore uses a simple core/access layout: an edge router for the ISP and NAT boundary, a Layer 3 core switch for inter-VLAN routing, and access switches for office users, services, wireless, printers, and CCTV.
+| Document | Purpose |
+| --- | --- |
+| [client-requirements.md](client-requirements.md) | Defines the business, operational, security, and technical requirements for the field-office network. |
+| [physical-topology.md](physical-topology.md) | Presents the physical network layout, device inventory, cabling approach, and equipment roles. |
+| [logical-topology.md](logical-topology.md) | Defines VLANs, routing, NAT, security zones, and traffic-control policy. |
+| [ip-addressing-plan.md](ip-addressing-plan.md) | Provides the complete VLSM addressing plan for the assigned `172.30.56.0/23` network. |
+| [README.md](README.md) | Confirms the initial GitHub repository structure and completed design package status. |
 
-The CCTV change request is handled as a real design requirement, not as an add-on. Cameras sit in their own VLAN, their traffic is kept away from normal users, and only the NVR/security workflow is allowed. Device administration is also separated into a management VLAN so router and switch access is not exposed to every office subnet.
+## Architecture Overview
+
+- Core/access topology for a clean and supportable field-office network.
+- VLAN separation for management, servers, administration, field operations, analysts, guest wireless, printers, and CCTV.
+- NAT/PAT on the edge router for internal-to-external address translation.
+- Dedicated CCTV network segment with controlled access to the NVR.
+- Dedicated management segment for router, switch, and access point administration.
+- Reserved address capacity for controlled growth.
 
 ## Repository Structure
 
@@ -48,20 +49,11 @@ The CCTV change request is handled as a real design requirement, not as an add-o
 `-- ip-addressing-plan.md
 ```
 
-## GitHub Repository Status
+## Repository Status
 
 | Item | Status |
 | --- | --- |
 | Repository URL | [CMPG-325-stats-sa-mafikeng-network](https://github.com/kudzaimudzingwa40-cmd/CMPG-325-stats-sa-mafikeng-network) |
-| Remote name | `origin` |
-| Active branch | `main` |
-| Portfolio status | Limited to the five Milestone 1 deliverables |
-
-Before submission, open the GitHub link and confirm that the repository shows only these five files and that the Markdown topology diagrams render correctly. Then submit the GitHub repository link on eFundi according to the Milestone 1 instructions.
-
-Useful local checks:
-
-```bash
-git status --short --branch
-git log --oneline --decorate -5
-```
+| Branch | `main` |
+| Visible repository files | Five design files |
+| Documentation status | Complete |

@@ -1,6 +1,10 @@
 # Physical Topology
 
-Project name: **Stats SA Mafikeng Field Office (Mahikeng)**
+Project: **Stats SA Mafikeng Field Office Network Design**
+
+Prepared by: **Kudzai Mudzingwa**
+
+Status: **Complete**
 
 ## Physical Layout
 
@@ -44,7 +48,7 @@ flowchart TB
     SWC --- CAM
 ```
 
-## Packet Tracer Device Inventory
+## Network Device Inventory
 
 | Device name | Packet Tracer device type | Quantity | Role |
 | --- | --- | --- | --- |
@@ -59,7 +63,7 @@ flowchart TB
 | NVR server | Packet Tracer server | 1 | CCTV recording endpoint. |
 | Wireless AP | Packet Tracer wireless AP | 1 | Training/guest wireless access. |
 | PCs/laptops | Packet Tracer end devices | As needed | Staff, analysts, admin, and test hosts. |
-| IP cameras | Packet Tracer camera/end devices | 4 baseline | CCTV change request. |
+| IP cameras | Packet Tracer camera/end devices | 4 baseline | Segmented CCTV monitoring. |
 | Printers | Packet Tracer printers | 2 baseline | Shared printing. |
 
 ## Link and Port Plan
@@ -76,14 +80,14 @@ flowchart TB
 
 This layout is intentionally practical. A government field office does not need an overcomplicated enterprise core, but it does need a network that can be explained, tested, and secured. The core/access structure gives the office a clear physical layout: traffic moves from endpoint switches to SW-CORE, then to R1 when it needs outside access.
 
-The CCTV access switch is kept separate because the client specifically requested segmented CCTV traffic. In a real building this also makes sense physically: cameras are often placed around entrances, corridors, and public areas, and grouping them helps with cabling, power, and troubleshooting.
+The CCTV access switch is kept separate because the design requires segmented camera traffic. In a real building this also makes sense physically: cameras are often placed around entrances, corridors, and public areas, and grouping them helps with cabling, power, and troubleshooting.
 
-NAT is placed on R1 because that is the natural inside/outside boundary. SW-CORE stays focused on internal routing and VLAN policy, which makes the Packet Tracer implementation easier to verify during demonstrations.
+NAT is placed on R1 because that is the natural inside/outside boundary. SW-CORE stays focused on internal routing and VLAN policy, which keeps the network design clear and operationally manageable.
 
-## Physical Review Strengths
+## Physical Design Outcome
 
 - All major devices are named and assigned a purpose.
 - Physical links show the difference between WAN, routed transit, trunks, and access ports.
-- The topology includes the CCTV change request as part of the main design.
-- The design is realistic enough for a field office but still manageable in Packet Tracer.
-- The device inventory can be used directly when building the `.pkt` file.
+- The topology includes CCTV segmentation as part of the main design.
+- The design is realistic for a field office and manageable in Cisco Packet Tracer.
+- The device inventory establishes a clear equipment baseline.

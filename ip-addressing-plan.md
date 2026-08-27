@@ -1,6 +1,10 @@
 # IP Addressing Plan
 
-Project name: **Stats SA Mafikeng Field Office (Mahikeng)**
+Project: **Stats SA Mafikeng Field Office Network Design**
+
+Prepared by: **Kudzai Mudzingwa**
+
+Status: **Complete**
 
 Assigned block: `172.30.56.0/23`
 
@@ -12,7 +16,7 @@ Total usable internal host addresses: 510
 
 The address plan uses VLSM so that larger user groups receive larger subnets and infrastructure networks receive smaller, controlled ranges. The plan keeps the first usable address as the default gateway in each VLAN, reserves low addresses for infrastructure, and uses DHCP for ordinary user devices.
 
-This approach is efficient because it does not waste a full `/24` on every department, but it still leaves growth space for later project changes.
+This approach is efficient because it does not waste a full `/24` on every department, while still reserving growth space for planned network expansion.
 
 ## Internal VLAN Addressing
 
@@ -30,8 +34,8 @@ This approach is efficient because it does not waste a full `/24` on every depar
 | Spare | Transit spare 1 | `172.30.57.116/30` | `255.255.255.252` | `172.30.57.117-172.30.57.118` | `172.30.57.119` | TBD | 2 hosts | Reserved |
 | Spare | Transit spare 2 | `172.30.57.120/30` | `255.255.255.252` | `172.30.57.121-172.30.57.122` | `172.30.57.123` | TBD | 2 hosts | Reserved |
 | Spare | Transit spare 3 | `172.30.57.124/30` | `255.255.255.252` | `172.30.57.125-172.30.57.126` | `172.30.57.127` | TBD | 2 hosts | Reserved |
-| Spare | Future small VLAN | `172.30.57.160/27` | `255.255.255.224` | `172.30.57.161-172.30.57.190` | `172.30.57.191` | TBD | 30 hosts | Reserved |
-| Spare | Future expansion | `172.30.57.192/26` | `255.255.255.192` | `172.30.57.193-172.30.57.254` | `172.30.57.255` | TBD | 62 hosts | Reserved |
+| Spare | Reserved small VLAN | `172.30.57.160/27` | `255.255.255.224` | `172.30.57.161-172.30.57.190` | `172.30.57.191` | Reserved | 30 hosts | Reserved |
+| Spare | Reserved expansion block | `172.30.57.192/26` | `255.255.255.192` | `172.30.57.193-172.30.57.254` | `172.30.57.255` | Reserved | 62 hosts | Reserved |
 
 ## DHCP Pool Plan
 
@@ -98,5 +102,5 @@ These outside addresses are for Packet Tracer simulation only. They are not part
 - Infrastructure networks are smaller and controlled: management and servers use `/27` networks.
 - Printers use a `/28` because they do not need many addresses.
 - The routed link between SW-CORE and R1 uses a `/30`, which is appropriate for two interfaces.
-- CCTV receives its own `/27`, enough for the baseline cameras and later expansion.
+- CCTV receives its own `/27`, enough for the baseline cameras and planned expansion.
 - All remaining address space is documented as spare, so there are no unexplained gaps in the assigned block.

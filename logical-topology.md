@@ -1,6 +1,10 @@
 # Logical Topology
 
-Project name: **Stats SA Mafikeng Field Office (Mahikeng)**
+Project: **Stats SA Mafikeng Field Office Network Design**
+
+Prepared by: **Kudzai Mudzingwa**
+
+Status: **Complete**
 
 ## Logical Design
 
@@ -77,7 +81,7 @@ flowchart LR
 | NAT ACL wildcard | `permit 172.30.56.0 0.0.1.255` |
 | Verification target | External test server `198.51.100.10` |
 
-The reason for using PAT overload is that many internal devices can share one simulated outside address. This matches a normal small-office edge design and gives a clear way to demonstrate the assigned NAT challenge in Packet Tracer.
+PAT overload allows many internal devices to share one simulated outside address. This matches a normal small-office edge design and satisfies the NAT inside/outside translation requirement.
 
 ## Logical Security Policy
 
@@ -91,18 +95,18 @@ The reason for using PAT overload is that many internal devices can share one si
 | CCTV VLAN | Internet | Deny by default. | Reduces unnecessary camera exposure. |
 | Guest/Training VLAN | Internal VLANs | Deny except DHCP/DNS if provided internally. | Keeps temporary users away from office resources. |
 | Guest/Training VLAN | Internet | Permit through NAT/PAT. | Allows limited outside access. |
-| Printers VLAN | User VLANs | Permit user-to-printer traffic, restrict printer-initiated access. | Supports printing while limiting lateral movement. |
+| Printers VLAN | User VLANs | Permit user-to-printer traffic, restrict printer-initiated access. | Supports printing while limiting unnecessary cross-network movement. |
 
 ## Access Control Placement
 
-- CCTV ACLs should be applied close to VLAN 80, preferably on the VLAN 80 SVI inbound direction.
-- Guest/training restrictions should be applied on VLAN 60 inbound.
-- Management restrictions should be applied on VTY lines and, where useful, with ACLs allowing only trusted admin source IPs.
+- CCTV ACLs are placed close to VLAN 80, preferably on the VLAN 80 SVI inbound direction.
+- Guest/training restrictions are placed on VLAN 60 inbound.
+- Management restrictions are placed on VTY lines and, where useful, with ACLs allowing only trusted admin source IPs.
 - NAT ACLs belong on R1 because R1 owns the inside/outside boundary.
 
-## Logical Review Strengths
+## Logical Design Outcome
 
 - The logical layout clearly separates the office into security and operational zones.
 - NAT, CCTV segmentation, management security, and internal services are all shown.
 - The VLAN plan matches the physical topology and the IP addressing plan.
-- The design avoids unnecessary extra scope while still giving enough detail to implement and test.
+- The design is complete, structured, and directly implementable in Cisco Packet Tracer.
