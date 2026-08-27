@@ -1,0 +1,15 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.bak
+~$*
+
+# Packet Tracer temporary backups
+*.pkt~
+
+# Keep project deliverables tracked:
+# *.pkt
+# *.md
+# *.mmd

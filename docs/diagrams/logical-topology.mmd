@@ -1,0 +1,31 @@
+flowchart LR
+    subgraph INSIDE["Inside Network: 172.30.56.0/23"]
+        VLAN10["VLAN 10\nNetwork Management"]
+        VLAN20["VLAN 20\nServers and Core Services"]
+        VLAN30["VLAN 30\nAdministration and Reception"]
+        VLAN40["VLAN 40\nField Operations / Data Capture"]
+        VLAN50["VLAN 50\nGIS / Statistical Analysis"]
+        VLAN60["VLAN 60\nTraining / Guest Wi-Fi"]
+        VLAN70["VLAN 70\nPrinters and Shared Devices"]
+        VLAN80["VLAN 80\nCCTV Cameras"]
+        VLAN99["VLAN 99\nCore-to-Edge Transit"]
+    end
+
+    CORE["SW-CORE\nLayer 3 Routing + ACLs"]
+    R1["R1 Edge Router\nNAT Inside/Outside"]
+    ISP["ISP / External Network"]
+    NVR["NVR\n172.30.56.40"]
+
+    VLAN10 --> CORE
+    VLAN20 --> CORE
+    VLAN30 --> CORE
+    VLAN40 --> CORE
+    VLAN50 --> CORE
+    VLAN60 --> CORE
+    VLAN70 --> CORE
+    VLAN80 --> CORE
+    VLAN99 --> CORE
+    CORE -->|default route| R1
+    R1 -->|NAT/PAT| ISP
+    VLAN80 -->|allowed only to NVR/security services| NVR
+
