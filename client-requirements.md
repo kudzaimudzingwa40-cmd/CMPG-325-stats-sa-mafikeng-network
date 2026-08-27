@@ -7,8 +7,8 @@ Project: **Stats SA Mafikeng Field Office Network Design**
 | Prepared by | Kudzai Mudzingwa |
 | Client | Stats SA Mafikeng Field Office |
 | Site | Mahikeng |
-| Design status | Complete |
-| Internal address block | `172.30.56.0/23` |
+| Design status | In progress |
+| Internal address block | `172.30.66.0/23` |
 | Network feature | NAT inside/outside address translation |
 | Security enhancement | Segmented CCTV network and protected device administration |
 | Simulation platform | Cisco Packet Tracer |
@@ -36,7 +36,7 @@ The design separates business functions into dedicated VLANs instead of placing 
 | --- | --- |
 | LAN architecture | Core/access topology with one Layer 3 core switch and dedicated access switches. |
 | WAN edge | Edge router providing the boundary between the internal LAN and outside network. |
-| Addressing | VLSM design using the assigned `172.30.56.0/23` block. |
+| Addressing | VLSM design using the assigned `172.30.66.0/23` block. |
 | Segmentation | VLANs for management, servers, administration, field operations, analysts, guest wireless, printers, and CCTV. |
 | Security | SSH administration, management VLAN isolation, CCTV traffic control, and guest wireless restrictions. |
 | Services | DHCP, DNS, file/application services, NVR services, printing, and NAT/PAT. |
