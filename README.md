@@ -5,7 +5,7 @@ Professional network design package for the Stats SA Mafikeng Field Office in Ma
 | Item | Detail |
 | --- | --- |
 | Prepared by | Kudzai Mudzingwa |
-| Design status | Complete |
+| Design status | In progress |
 | Project stage | Client Design Review |
 | Client | Stats SA Mafikeng Field Office |
 | Location | Mahikeng |
@@ -26,7 +26,7 @@ The proposed architecture uses an edge router for the WAN and NAT boundary, a La
 | [client-requirements.md](client-requirements.md) | Defines the business, operational, security, and technical requirements for the field-office network. |
 | [physical-topology.md](physical-topology.md) | Presents the physical network layout, device inventory, cabling approach, and equipment roles. |
 | [logical-topology.md](logical-topology.md) | Defines VLANs, routing, NAT, security zones, and traffic-control policy. |
-| [ip-addressing-plan.md](ip-addressing-plan.md) | Provides the complete VLSM addressing plan for the assigned `172.30.56.0/23` network. |
+| [ip-addressing-plan.md](ip-addressing-plan.md) | Provides the complete VLSM addressing plan for the assigned `172.30.66.0/23` network. |
 | [README.md](README.md) | Confirms the initial GitHub repository structure and completed design package status. |
 
 ## Architecture Overview
@@ -56,4 +56,4 @@ The proposed architecture uses an edge router for the WAN and NAT boundary, a La
 | Repository URL | [CMPG-325-stats-sa-mafikeng-network](https://github.com/kudzaimudzingwa40-cmd/CMPG-325-stats-sa-mafikeng-network) |
 | Branch | `main` |
 | Visible repository files | Five design files |
-| Documentation status | Complete |
+| Documentation status | In progress |
