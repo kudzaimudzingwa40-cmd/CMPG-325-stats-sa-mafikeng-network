@@ -31,7 +31,7 @@ This approach is efficient because it does not waste a full `/24` on every depar
 | 70 | Printers and Shared Devices | `172.30.67.96/28` | `255.255.255.240` | `172.30.67.97-172.30.57.110` | `172.30.67.111` | `172.30.67.97` | 14 hosts | Static printers |
 | 99 | Core-to-Edge Transit | `172.30.67.112/30` | `255.255.255.252` | `172.30.57.113-172.30.67.114` | `172.30.67.115` | Point-to-point | 2 hosts | SW-CORE to R1 |
 | 80 | CCTV Cameras | `172.30.67.128/27` | `255.255.255.224` | `172.30.67.129-172.30.57.158` | `172.30.67.159` | `172.30.67.129` | 30 hosts | Cameras and CCTV devices |
-| Spare | Transit spare 1 | `172.30.67.116/30` | `255.255.255.252` | `172.30.67.117-172.30.57.118` | `172.30.67.119` | TBD | 2 hosts | Reserved |
+| Spare | Transit spare 1 | `172.30.67.116/30` | `255.255.255.252` | `172.30.67.117-172.30.57.118` | `172.30.67.119` | TBD(To Be Decided) | 2 hosts | Reserved |
 | Spare | Transit spare 2 | `172.30.67.120/30` | `255.255.255.252` | `172.30.67.121-172.30.57.122` | `172.30.67.123` | TBD | 2 hosts | Reserved |
 | Spare | Transit spare 3 | `172.30.67.124/30` | `255.255.255.252` | `172.30.67.125-172.30.57.126` | `172.30.67.127` | TBD | 2 hosts | Reserved |
 | Spare | Reserved small VLAN | `172.30.67.160/27` | `255.255.255.224` | `172.30.67.161-172.30.57.190` | `172.30.67.191` | Reserved | 30 hosts | Reserved |
