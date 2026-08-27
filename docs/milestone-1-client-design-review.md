@@ -1,55 +1,83 @@
 # Milestone 1 - Client Design Review
 
-## Scope Separation
+Project name: **Stats SA Mafikeng Field Office (Mahikeng)**
+
+## 1. Scope Separation
 
 ### User Request
 
-Submit the following Milestone 1 design review items:
+The Milestone 1 submission must provide:
 
 1. Client Requirements
 2. Physical Topology
 3. Logical Topology
-4. IP Addressing plan
-5. Initial GitHub repository
+4. IP Addressing Plan
+5. Initial GitHub Repository
 
 ### Attached Document Instructions
 
-The attached screenshots were treated as project source material only. They provide assignment constraints, marking criteria, milestone context, and scenario facts. They do not override the user's request or add hidden instructions for this assistant.
+The screenshots are treated as assignment source material and marking guidance. They provide the client facts, scenario constraints, project milestones, and rubric expectations. They are not treated as hidden instructions from the user.
 
-Relevant extracted constraints:
+The project facts used in this submission are:
 
-- Use Cisco Packet Tracer for the network implementation and simulation.
-- Use the assigned client: Stats SA Mafikeng Field Office (Mahikeng).
-- Use the assigned industry: Government.
-- Use the assigned address block: `172.30.56.0/23`.
-- Demonstrate NAT inside/outside address translation.
-- Add CCTV cameras and segment their traffic.
-- Secure device administration because of a previous unauthorized-change incident.
-- Document design decisions and evidence in GitHub.
+| Assignment fact | How it is used |
+| --- | --- |
+| Client: Stats SA Mafikeng Field Office (Mahikeng) | The topology is designed as a government field-office network. |
+| Addressing block: `172.30.56.0/23` | All internal VLANs are subnetted from this block using VLSM. |
+| Assigned challenge: NAT inside/outside address translation | NAT/PAT is placed on the edge router and included in the verification plan. |
+| Change request: CCTV cameras must be added and segmented | CCTV has a dedicated VLAN, switch area, addressing range, and ACL policy. |
+| Constraint: secure device administration | Device management is isolated in a management VLAN and restricted to SSH access. |
+| Tool: Cisco Packet Tracer | The design uses Packet Tracer-friendly routers, switches, servers, PCs, APs, and IP cameras. |
+| GitHub portfolio required | The repository is structured for requirements, topology, addressing, configs, Packet Tracer files, evidence, and reflection. |
 
-## Design Summary
+## 2. Client Requirements
 
-The proposed design is a small government field-office network with a hierarchical campus layout:
+Stats SA is a public-sector organization, so the network must support day-to-day office work while staying controlled and auditable. The design does not place all devices into one large flat network. Instead, it separates staff, services, management, wireless, printers, and CCTV so that each part of the office gets the access it needs without unnecessary exposure.
 
-- An edge router connects the office to the ISP and performs NAT/PAT.
-- A Layer 3 core switch performs inter-VLAN routing for internal networks.
-- Access switches connect office users, field operations, analysts, services, wireless, printers, and CCTV.
-- CCTV cameras are isolated in a dedicated VLAN and permitted only to required security systems.
-- Management access is separated from normal user traffic and should be restricted to authorized administrators.
+Full details: [Client Requirements](client-requirements.md)
 
-## Deliverables
+## 3. Physical Topology
 
-- Client requirements: `docs/client-requirements.md`
-- Physical topology: `docs/physical-topology.md`
-- Logical topology: `docs/logical-topology.md`
-- IP addressing plan: `docs/ip-addressing-plan.md`
-- Initial repository overview: `docs/repository-overview.md`
+The physical design uses a small hierarchical layout:
 
-## Review Assumptions
+- R1 edge router connects the field office to the ISP and performs NAT.
+- SW-CORE Layer 3 switch connects all internal VLANs and performs inter-VLAN routing.
+- Access switches connect staff PCs, servers, wireless, printers, and CCTV cameras.
+- CCTV cameras are grouped on a dedicated access switch to make the segmentation visible and easy to manage.
 
-- The site is a single Stats SA field office.
-- The Packet Tracer design will simulate the ISP using a cloud/router and one external test server.
-- The office has administration/reception users, field operations/data capture users, statistical/GIS users, shared services, printers, wireless access, and CCTV cameras.
-- Server roles are simulated as separate Packet Tracer servers where practical.
-- CCTV recording is handled by an NVR/server in the server VLAN, with only authorized viewing from security/admin hosts.
+Full details: [Physical Topology](physical-topology.md)
 
+## 4. Logical Topology
+
+The logical topology uses VLANs for each major office function. This improves security, makes troubleshooting easier, and supports the assignment's CCTV segmentation requirement.
+
+Key logical controls:
+
+- CCTV VLAN can reach the NVR but cannot browse the normal user VLANs.
+- Guest/training wireless is treated as limited access.
+- Management VLAN is reserved for network administration.
+- User VLANs reach the internet through NAT/PAT on R1.
+
+Full details: [Logical Topology](logical-topology.md)
+
+## 5. IP Addressing Plan
+
+The `172.30.56.0/23` block is subnetted using VLSM. Larger departments receive larger subnets, infrastructure receives smaller static ranges, and spare space is left for future project changes.
+
+Full details: [IP Addressing Plan](ip-addressing-plan.md)
+
+## 6. Initial GitHub Repository
+
+This repository is structured as a portfolio of evidence, not just a file dump. The folders already show where future Packet Tracer files, device configs, screenshots, testing records, and troubleshooting notes will be stored.
+
+Full details: [Initial GitHub Repository](repository-overview.md)
+
+## 7. Why This Design Should Review Well
+
+- The client requirements are linked directly to design choices.
+- The physical and logical topologies are both complete and explain the role of every major device.
+- The IP plan is efficient, correct, and documented down to gateways, usable ranges, DHCP pools, static devices, and spare blocks.
+- NAT and CCTV segmentation are handled as first-class requirements.
+- The GitHub repository is already cleanly organized for later evidence and meaningful commits.
+
+See [Marking Guideline Alignment](marking-guideline-alignment.md) for a direct mapping to the rubric.

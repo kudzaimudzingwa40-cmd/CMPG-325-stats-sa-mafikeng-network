@@ -1,20 +1,22 @@
 flowchart LR
-    subgraph INSIDE["Inside Network: 172.30.56.0/23"]
-        VLAN10["VLAN 10\nNetwork Management"]
-        VLAN20["VLAN 20\nServers and Core Services"]
-        VLAN30["VLAN 30\nAdministration and Reception"]
-        VLAN40["VLAN 40\nField Operations / Data Capture"]
-        VLAN50["VLAN 50\nGIS / Statistical Analysis"]
-        VLAN60["VLAN 60\nTraining / Guest Wi-Fi"]
-        VLAN70["VLAN 70\nPrinters and Shared Devices"]
-        VLAN80["VLAN 80\nCCTV Cameras"]
-        VLAN99["VLAN 99\nCore-to-Edge Transit"]
+    subgraph INSIDE["Inside network: 172.30.56.0/23"]
+        VLAN10["VLAN 10\nManagement\n172.30.56.0/27"]
+        VLAN20["VLAN 20\nServers\n172.30.56.32/27"]
+        VLAN30["VLAN 30\nAdmin / Reception\n172.30.56.64/26"]
+        VLAN40["VLAN 40\nField Operations\n172.30.56.128/25"]
+        VLAN50["VLAN 50\nGIS / Statistics\n172.30.57.0/26"]
+        VLAN60["VLAN 60\nTraining / Guest Wi-Fi\n172.30.57.64/27"]
+        VLAN70["VLAN 70\nPrinters\n172.30.57.96/28"]
+        VLAN80["VLAN 80\nCCTV\n172.30.57.128/27"]
+        VLAN99["VLAN 99\nCore-to-Edge Transit\n172.30.57.112/30"]
     end
 
-    CORE["SW-CORE\nLayer 3 Routing + ACLs"]
-    R1["R1 Edge Router\nNAT Inside/Outside"]
-    ISP["ISP / External Network"]
-    NVR["NVR\n172.30.56.40"]
+    CORE["SW-CORE\nSVIs, routing, ACLs"]
+    R1["R1 Edge Router\nNAT inside/outside"]
+    ISP["ISP / Internet simulation"]
+    EXT["External test server\n198.51.100.10"]
+    NVR["CCTV NVR\n172.30.56.40"]
+    ADMINPC["Security viewing PC\n172.30.56.66"]
 
     VLAN10 --> CORE
     VLAN20 --> CORE
@@ -25,7 +27,10 @@ flowchart LR
     VLAN70 --> CORE
     VLAN80 --> CORE
     VLAN99 --> CORE
+    VLAN20 --> NVR
+    VLAN30 --> ADMINPC
+    VLAN80 -. "permit CCTV to NVR only" .-> NVR
+    ADMINPC -. "permit authorized viewing" .-> NVR
     CORE -->|default route| R1
-    R1 -->|NAT/PAT| ISP
-    VLAN80 -->|allowed only to NVR/security services| NVR
-
+    R1 -->|PAT overload| ISP
+    ISP --> EXT
