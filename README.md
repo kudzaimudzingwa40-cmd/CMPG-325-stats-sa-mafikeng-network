@@ -1,42 +1,84 @@
 # Stats SA Mafikeng Field Office Network Design
 
-Professional network design package for the Stats SA Mafikeng Field Office in Mahikeng.
+Professional Cisco Packet Tracer network design for the **Stats SA Mafikeng Field Office (Mahikeng)**.
 
 | Item | Detail |
 | --- | --- |
 | Prepared by | Kudzai Mudzingwa |
-| Design status | In progress |
-| Project stage | Client Design Review |
+| Project | CMPG 325 Computer Networks |
 | Client | Stats SA Mafikeng Field Office |
-| Location | Mahikeng |
-| Project reference | CMPG 325 Computer Networks |
+| Location | Mahikeng, North West, South Africa |
+| Assigned feature | NAT inside/outside address translation (PAT overload) |
+| Security enhancement | CCTV VLAN segmentation and protected device administration |
 | Internal address block | `172.30.66.0/23` |
 | Simulation platform | Cisco Packet Tracer |
+| Repository status | Submission package |
 
-## Executive Summary
+## Submission Items
 
-This design provides a secure, structured network for a government field office that supports administration, field operations, statistical analysis, shared services, printing, wireless access, CCTV monitoring, and controlled internet access.
+### 1. Working Packet Tracer file
+The final `.pkt` simulation file should be stored in the repository as:
 
-The proposed architecture uses an edge router for the WAN and NAT boundary, a Layer 3 core switch for inter-VLAN routing, and dedicated access switches for users, services, printers, wireless, and CCTV. CCTV traffic is isolated in its own VLAN, while device administration is protected through a dedicated management VLAN and SSH-based access control.
+`packet-tracer/StatsSA-Mafikeng-Network.pkt`
 
-## Design Package Contents
+> GitHub's text-file API used for this repository cannot upload binary Packet Tracer files. The `.pkt` must therefore be uploaded from Cisco Packet Tracer/Git locally. The configuration and verification requirements are documented in `testing-evidence.md`.
 
-| Document | Purpose |
-| --- | --- |
-| [client-requirements.md](client-requirements.md) | Defines the business, operational, security, and technical requirements for the field-office network. |
-| [physical-topology.md](physical-topology.md) | Presents the physical network layout, device inventory, cabling approach, and equipment roles. |
-| [logical-topology.md](logical-topology.md) | Defines VLANs, routing, NAT, security zones, and traffic-control policy. |
-| [ip-addressing-plan.md](ip-addressing-plan.md) | Provides the complete VLSM addressing plan for the assigned `172.30.66.0/23` network. |
-| [README.md](README.md) | Confirms the initial GitHub repository structure and completed design package status. |
+### 2. Assigned feature implemented — NAT/PAT
+The assigned feature is **NAT inside/outside address translation** on R1.
 
-## Architecture Overview
+Required implementation:
 
-- Core/access topology for a clean and supportable field-office network.
-- VLAN separation for management, servers, administration, field operations, analysts, guest wireless, printers, and CCTV.
-- NAT/PAT on the edge router for internal-to-external address translation.
-- Dedicated CCTV network segment with controlled access to the NVR.
-- Dedicated management segment for router, switch, and access point administration.
-- Reserved address capacity for controlled growth.
+```text
+Inside LAN:       172.30.66.0/23
+R1 inside:        172.30.67.114/30
+R1 outside:       203.0.113.2/30
+NAT type:         PAT overload
+NAT ACL:          permit 172.30.66.0 0.0.1.255
+External target:  198.51.100.10
+```
+
+Example R1 configuration:
+
+```cisco
+access-list 1 permit 172.30.66.0 0.0.1.255
+
+interface GigabitEthernet0/0
+ ip address 172.30.67.114 255.255.255.252
+ ip nat inside
+ no shutdown
+
+interface GigabitEthernet0/1
+ ip address 203.0.113.2 255.255.255.252
+ ip nat outside
+ no shutdown
+
+ip nat inside source list 1 interface GigabitEthernet0/1 overload
+ip route 172.30.66.0 255.255.254.0 172.30.67.113
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+```
+
+### 3. Testing evidence
+The required evidence is documented in **testing-evidence.md**. Packet Tracer screenshots should show successful connectivity and NAT translation rather than only configuration.
+
+Minimum evidence:
+- End device receives a valid DHCP address.
+- Internal host can ping its VLAN gateway.
+- Internal host can reach `198.51.100.10`.
+- R1 `show ip nat translations` displays translations.
+- R1 `show ip nat statistics` confirms inside/outside operation.
+- `show ip route` confirms the internal and default routes.
+- CCTV host can reach the NVR while CCTV-to-user traffic is restricted.
+- SSH management is reachable only from an authorized management host.
+
+### 4. Updated GitHub portfolio
+The repository contains:
+- `README.md` — project overview and submission checklist.
+- `client-requirements.md` — client and technical requirements.
+- `physical-topology.md` — physical design and device inventory.
+- `logical-topology.md` — VLANs, routing, NAT, and security policy.
+- `ip-addressing-plan.md` — VLSM addressing and static/DHCP allocation.
+- `testing-evidence.md` — practical test procedure and evidence checklist.
+- `packet-tracer/` — location reserved for the final `.pkt` file.
 
 ## Repository Structure
 
@@ -46,14 +88,24 @@ The proposed architecture uses an edge router for the WAN and NAT boundary, a La
 |-- client-requirements.md
 |-- physical-topology.md
 |-- logical-topology.md
-`-- ip-addressing-plan.md
+|-- ip-addressing-plan.md
+|-- testing-evidence.md
+`-- packet-tracer/
+    `-- StatsSA-Mafikeng-Network.pkt   # upload from Packet Tracer
 ```
 
-## Repository Status
+## Design Summary
+The network uses a Layer 3 core switch for inter-VLAN routing and an edge router for the WAN/NAT boundary. VLANs separate management, servers, administration, field operations, GIS/statistics, guest/training wireless, printers, and CCTV.
 
-| Item | Status |
+CCTV is isolated in VLAN 80, while management access is protected through VLAN 10 and SSH. PAT on R1 provides controlled external connectivity for internal private addresses.
+
+## Submission Status
+| Requirement | Repository status |
 | --- | --- |
-| Repository URL | [CMPG-325-stats-sa-mafikeng-network](https://github.com/kudzaimudzingwa40-cmd/CMPG-325-stats-sa-mafikeng-network) |
-| Branch | `main` |
-| Visible repository files | Five design files |
-| Documentation status | In progress |
+| Client requirements | Complete |
+| Physical topology | Complete |
+| Logical topology | Complete |
+| IP addressing plan | Complete |
+| Assigned NAT/PAT feature specification | Complete |
+| Testing procedure/evidence template | Complete |
+| Packet Tracer `.pkt` | **Requires local Packet Tracer upload** |
