@@ -108,4 +108,10 @@ CCTV is isolated in VLAN 80, while management access is protected through VLAN 1
 | IP addressing plan | Complete |
 | Assigned NAT/PAT feature specification | Complete |
 | Testing procedure/evidence template | Complete |
-| Packet Tracer `.pkt` | **Requires local Packet Tracer upload** |
+| Packet Tracer submission folder | Added |
+| Actual Packet Tracer `.pkt` | **Pending local Packet Tracer export/upload** |
+| Actual testing screenshots | **Pending Packet Tracer testing/upload** |
+
+## Final Submission Note
+
+The repository is prepared for review and contains the design documentation, assigned-feature specification, testing matrix, and dedicated folders for the Packet Tracer file and evidence. The final `.pkt` and screenshots must be produced from an actual Cisco Packet Tracer session; they should not be represented as completed until they have been tested and observed.
