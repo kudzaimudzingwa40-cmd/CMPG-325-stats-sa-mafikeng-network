@@ -22,18 +22,18 @@ This approach is efficient because it does not waste a full `/24` on every depar
 
 | VLAN | Name | Subnet | Mask | Usable host range | Broadcast | Gateway | Capacity | Allocation |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 10 | Network Management | `172.30.66.0/27` | `255.255.255.224` | `172.30.66.1-172.30.56.30` | `172.30.66.31` | `172.30.66.1` | 30 hosts | Static infrastructure |
-| 20 | Servers and Core Services | `172.30.66.32/27` | `255.255.255.224` | `172.30.66.33-172.30.56.62` | `172.30.66.63` | `172.30.66.33` | 30 hosts | Static servers |
-| 30 | Administration and Reception | `172.30.66.64/26` | `255.255.255.192` | `172.30.66.65-172.30.56.126` | `172.30.66.127` | `172.30.66.65` | 62 hosts | DHCP users plus security viewer |
-| 40 | Field Operations / Data Capture | `172.30.66.128/25` | `255.255.255.128` | `172.30.66.129-172.30.56.254` | `172.30.66.255` | `172.30.66.129` | 126 hosts | Largest DHCP user pool |
-| 50 | GIS / Statistical Analysis | `172.30.67.0/26` | `255.255.255.192` | `172.30.67.1-172.30.57.62` | `172.30.67.63` | `172.30.67.1` | 62 hosts | DHCP specialist users |
-| 60 | Training / Guest Wi-Fi | `172.30.67.64/27` | `255.255.255.224` | `172.30.67.65-172.30.57.94` | `172.30.67.95` | `172.30.67.65` | 30 hosts | Controlled DHCP wireless |
-| 70 | Printers and Shared Devices | `172.30.67.96/28` | `255.255.255.240` | `172.30.67.97-172.30.57.110` | `172.30.67.111` | `172.30.67.97` | 14 hosts | Static printers |
-| 99 | Core-to-Edge Transit | `172.30.67.112/30` | `255.255.255.252` | `172.30.57.113-172.30.67.114` | `172.30.67.115` | Point-to-point | 2 hosts | SW-CORE to R1 |
-| 80 | CCTV Cameras | `172.30.67.128/27` | `255.255.255.224` | `172.30.67.129-172.30.57.158` | `172.30.67.159` | `172.30.67.129` | 30 hosts | Cameras and CCTV devices |
-| Spare | Transit spare 1 | `172.30.67.116/30` | `255.255.255.252` | `172.30.67.117-172.30.57.118` | `172.30.67.119` | TBD(To Be Decided) | 2 hosts | Reserved |
-| Spare | Transit spare 2 | `172.30.67.120/30` | `255.255.255.252` | `172.30.67.121-172.30.57.122` | `172.30.67.123` | TBD | 2 hosts | Reserved |
-| Spare | Transit spare 3 | `172.30.67.124/30` | `255.255.255.252` | `172.30.67.125-172.30.57.126` | `172.30.67.127` | TBD | 2 hosts | Reserved |
+| 10 | Network Management | `172.30.66.0/27` | `255.255.255.224` | `172.30.66.1-172.30.66.30` | `172.30.66.31` | `172.30.66.1` | 30 hosts | Static infrastructure |
+| 20 | Servers and Core Services | `172.30.66.32/27` | `255.255.255.224` | `172.30.66.33-172.30.66.62` | `172.30.66.63` | `172.30.66.33` | 30 hosts | Static servers |
+| 30 | Administration and Reception | `172.30.66.64/26` | `255.255.255.192` | `172.30.66.65-172.30.66.126` | `172.30.66.127` | `172.30.66.65` | 62 hosts | DHCP users plus security viewer |
+| 40 | Field Operations / Data Capture | `172.30.66.128/25` | `255.255.255.128` | `172.30.66.129-172.30.66.254` | `172.30.66.255` | `172.30.66.129` | 126 hosts | Largest DHCP user pool |
+| 50 | GIS / Statistical Analysis | `172.30.67.0/26` | `255.255.255.192` | `172.30.67.1-172.30.67.62` | `172.30.67.63` | `172.30.67.1` | 62 hosts | DHCP specialist users |
+| 60 | Training / Guest Wi-Fi | `172.30.67.64/27` | `255.255.255.224` | `172.30.67.65-172.30.67.94` | `172.30.67.95` | `172.30.67.65` | 30 hosts | Controlled DHCP wireless |
+| 70 | Printers and Shared Devices | `172.30.67.96/28` | `255.255.255.240` | `172.30.67.97-172.30.67.110` | `172.30.67.111` | `172.30.67.97` | 14 hosts | Static printers |
+| 99 | Core-to-Edge Transit | `172.30.67.112/30` | `255.255.255.252` | `172.30.67.113-172.30.67.114` | `172.30.67.115` | Point-to-point | 2 hosts | SW-CORE to R1 |
+| 80 | CCTV Cameras | `172.30.67.128/27` | `255.255.255.224` | `172.30.67.129-172.30.67.158` | `172.30.67.159` | `172.30.67.129` | 30 hosts | Cameras and CCTV devices |
+| Spare | Transit spare 1 | `172.30.67.116/30` | `255.255.255.252` | `172.30.67.117-172.30.67.118` | `172.30.67.119` | TBD(To Be Decided) | 2 hosts | Reserved |
+| Spare | Transit spare 2 | `172.30.67.120/30` | `255.255.255.252` | `172.30.67.121-172.30.67.122` | `172.30.67.123` | TBD | 2 hosts | Reserved |
+| Spare | Transit spare 3 | `172.30.67.124/30` | `255.255.255.252` | `172.30.67.125-172.30.67.126` | `172.30.67.127` | TBD | 2 hosts | Reserved |
 | Spare | Reserved small VLAN | `172.30.67.160/27` | `255.255.255.224` | `172.30.67.161-172.30.57.190` | `172.30.67.191` | Reserved | 30 hosts | Reserved |
 | Spare | Reserved expansion block | `172.30.67.192/26` | `255.255.255.192` | `172.30.67.193-172.30.67.254` | `172.30.67.255` | Reserved | 62 hosts | Reserved |
 
