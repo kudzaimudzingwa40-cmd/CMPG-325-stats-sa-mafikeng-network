@@ -1,117 +1,97 @@
-# Stats SA Mafikeng Field Office Network Design
+# Stats SA Mafikeng Field Office — Network Implementation
 
-Professional Cisco Packet Tracer network design for the **Stats SA Mafikeng Field Office (Mahikeng)**.
+Cisco Packet Tracer implementation for the **Stats SA Mafikeng Field Office (Mahikeng)**, prepared as part of CMPG 325 Computer Networks.
 
-| Item | Detail |
+## Project Summary
+
+| Item | Implementation |
 | --- | --- |
 | Prepared by | Kudzai Mudzingwa |
-| Project | CMPG 325 Computer Networks |
 | Client | Stats SA Mafikeng Field Office |
-| Location | Mahikeng, North West, South Africa |
-| Assigned feature | NAT inside/outside address translation (PAT overload) |
-| Security enhancement | CCTV VLAN segmentation and protected device administration |
-| Internal address block | `172.30.66.0/23` |
-| Simulation platform | Cisco Packet Tracer |
-| Repository status | Submission package |
+| Site | Mahikeng, North West, South Africa |
+| Platform | Cisco Packet Tracer 9.x |
+| Architecture | Router-on-a-stick with one core switch and two access switches |
+| Edge router | Cisco 2911 (R1) |
+| Switching | Cisco 2960 core/access switches |
+| External test network | `203.0.113.0/24` |
+| Management network | `192.168.99.0/24` |
+| Security controls | Guest isolation, CCTV isolation, SSH management |
+| Internet simulation | PAT/NAT overload through R1 |
 
-## Submission Items
+## Implemented Topology
 
-### 1. Working Packet Tracer file
-The final `.pkt` simulation file should be stored in the repository as:
+The final Packet Tracer implementation contains R1, SW1-Core, SW2-Access, SW3-Access, an external test server, and six representative endpoint systems: Admin, Field, Finance, HR, Guest, and CCTV.
 
-`packet-tracer/StatsSA-Mafikeng-Network.pkt`
+R1 provides 802.1Q subinterfaces and default gateways for the internal VLANs. SW1-Core aggregates the two access switches, while SW2 and SW3 place endpoints into their assigned access VLANs.
 
-> GitHub's text-file API used for this repository cannot upload binary Packet Tracer files. The `.pkt` must therefore be uploaded from Cisco Packet Tracer/Git locally. The configuration and verification requirements are documented in `testing-evidence.md`.
+## Implemented Addressing
 
-### 2. Assigned feature implemented — NAT/PAT
-The assigned feature is **NAT inside/outside address translation** on R1.
+| VLAN | Function | Subnet | Gateway |
+| ---: | --- | --- | --- |
+| 10 | Administration | `192.168.10.0/24` | `192.168.10.1` |
+| 20 | Field | `192.168.20.0/24` | `192.168.20.1` |
+| 30 | Finance | `192.168.30.0/24` | `192.168.30.1` |
+| 40 | HR | `192.168.40.0/24` | `192.168.40.1` |
+| 50 | Guest | `192.168.50.0/24` | `192.168.50.1` |
+| 60 | CCTV | `192.168.60.0/24` | `192.168.60.1` |
+| 99 | Network management | `192.168.99.0/24` | `192.168.99.1` |
+| — | External test network | `203.0.113.0/24` | R1: `203.0.113.1` |
 
-Required implementation:
+The external test server is `203.0.113.10`.
 
-```text
-Inside LAN:       172.30.66.0/23
-R1 inside:        172.30.67.114/30
-R1 outside:       203.0.113.2/30
-NAT type:         PAT overload
-NAT ACL:          permit 172.30.66.0 0.0.1.255
-External target:  198.51.100.10
-```
+## Security and Network Services
 
-Example R1 configuration:
+**Inter-VLAN routing.** R1 uses router-on-a-stick subinterfaces on `GigabitEthernet0/1` for VLANs 10, 20, 30, 40, 50, 60, and 99.
 
-```cisco
-access-list 1 permit 172.30.66.0 0.0.1.255
+**NAT/PAT.** Internal VLAN subinterfaces are NAT-inside interfaces and `GigabitEthernet0/0` is the NAT-outside interface. PAT provides translated connectivity to the simulated external network.
 
-interface GigabitEthernet0/0
- ip address 172.30.67.114 255.255.255.252
- ip nat inside
- no shutdown
+**Guest isolation.** The `GUEST-ISOLATION` ACL prevents VLAN 50 from initiating traffic to protected internal and management networks while allowing permitted external traffic.
 
-interface GigabitEthernet0/1
- ip address 203.0.113.2 255.255.255.252
- ip nat outside
- no shutdown
+**CCTV isolation.** The `CCTV-ISOLATION` ACL prevents VLAN 60 from initiating traffic to user and management networks while allowing permitted external traffic.
 
-ip nat inside source list 1 interface GigabitEthernet0/1 overload
-ip route 172.30.66.0 255.255.254.0 172.30.67.113
-ip route 0.0.0.0 0.0.0.0 203.0.113.1
-```
+**Secure management.** SW1-Core, SW2-Access, and SW3-Access use VLAN 99 management addresses. SSH was configured for administrative access.
 
-### 3. Testing evidence
-The required evidence is documented in **testing-evidence.md**. Packet Tracer screenshots should show successful connectivity and NAT translation rather than only configuration.
+## Verification Status
 
-Minimum evidence:
-- End device receives a valid DHCP address.
-- Internal host can ping its VLAN gateway.
-- Internal host can reach `198.51.100.10`.
-- R1 `show ip nat translations` displays translations.
-- R1 `show ip nat statistics` confirms inside/outside operation.
-- `show ip route` confirms the internal and default routes.
-- CCTV host can reach the NVR while CCTV-to-user traffic is restricted.
-- SSH management is reachable only from an authorized management host.
+Only results actually observed during Packet Tracer testing are reported here.
 
-### 4. Updated GitHub portfolio
-The repository contains:
-- `README.md` — project overview and submission checklist.
-- `client-requirements.md` — client and technical requirements.
-- `physical-topology.md` — physical design and device inventory.
-- `logical-topology.md` — VLANs, routing, NAT, and security policy.
-- `ip-addressing-plan.md` — VLSM addressing and static/DHCP allocation.
-- `testing-evidence.md` — practical test procedure and evidence checklist.
-- `packet-tracer/` — location reserved for the final `.pkt` file.
+| Control / test | Observed result |
+| --- | --- |
+| Management reachability | PC-Admin successfully reached `192.168.99.2`, `.3`, and `.4` |
+| SSH management | Successful PC-Admin SSH session to SW1-Core |
+| Guest gateway | `192.168.50.1`: 4/4 replies |
+| Guest → Admin | Blocked: 100% packet loss |
+| Guest → external server | `203.0.113.10`: 4/4 replies |
+| CCTV gateway | `192.168.60.1`: 4/4 replies |
+| CCTV → Admin | Blocked: 100% packet loss |
+| CCTV → external server | `203.0.113.10`: 4/4 replies |
+| NAT statistics | 4 dynamic translations and 12 hits observed |
+| ACL counters | Guest and CCTV deny/permit counters incremented during testing |
+| Final topology | Required devices present with active links |
+
+DHCP, a dedicated inter-VLAN evidence capture, and a final routing-table screenshot were not captured during the recorded evidence session and are therefore not represented as verified evidence.
 
 ## Repository Structure
 
 ```text
 .
-|-- README.md
-|-- client-requirements.md
-|-- physical-topology.md
-|-- logical-topology.md
-|-- ip-addressing-plan.md
-|-- testing-evidence.md
-`-- packet-tracer/
-    `-- StatsSA-Mafikeng-Network.pkt   # upload from Packet Tracer
+├── README.md
+├── SUBMISSION.md
+├── client-requirements.md
+├── physical-topology.md
+├── logical-topology.md
+├── ip-addressing-plan.md
+├── testing-evidence.md
+├── packet-tracer/
+│   └── StatsSA-Mafikeng-Network.pkt
+└── evidence/
+    └── README.md
 ```
 
-## Design Summary
-The network uses a Layer 3 core switch for inter-VLAN routing and an edge router for the WAN/NAT boundary. VLANs separate management, servers, administration, field operations, GIS/statistics, guest/training wireless, printers, and CCTV.
+## Operational Notes
 
-CCTV is isolated in VLAN 80, while management access is protected through VLAN 10 and SSH. PAT on R1 provides controlled external connectivity for internal private addresses.
+The Packet Tracer file is the authoritative implementation artifact. The Markdown files document the implemented design, test scope, and evidence status. Before using this design outside a simulation environment, replace laboratory credentials, use organization-approved IP addressing, define production firewall policy, implement centralized AAA/logging, and validate availability and capacity requirements.
 
-## Submission Status
-| Requirement | Repository status |
-| --- | --- |
-| Client requirements | Complete |
-| Physical topology | Complete |
-| Logical topology | Complete |
-| IP addressing plan | Complete |
-| Assigned NAT/PAT feature specification | Complete |
-| Testing procedure/evidence template | Complete |
-| Packet Tracer submission folder | Added |
-| Actual Packet Tracer `.pkt` | **Pending local Packet Tracer export/upload** |
-| Actual testing screenshots | **Pending Packet Tracer testing/upload** |
+## Review
 
-## Final Submission Note
-
-The repository is prepared for review and contains the design documentation, assigned-feature specification, testing matrix, and dedicated folders for the Packet Tracer file and evidence. The final `.pkt` and screenshots must be produced from an actual Cisco Packet Tracer session; they should not be represented as completed until they have been tested and observed.
+See `SUBMISSION.md` for the handover summary and `testing-evidence.md` for the verification procedure and evidence register.
