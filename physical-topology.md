@@ -1,93 +1,57 @@
 # Physical Topology
 
-Project: **Stats SA Mafikeng Field Office Network Design**
+## Implemented Layout
 
-Prepared by: **Kudzai Mudzingwa**
+The Packet Tracer implementation uses a compact hierarchical topology suitable for a small branch/field-office simulation.
 
-Status: **Complete**
-
-## Physical Layout
-
-```mermaid
-flowchart TB
-    ISP["ISP / Internet Cloud\nOutside network"]
-    EXT["External Test Server\n198.51.100.10"]
-    R1["R1 Edge Router\nNAT/PAT + WAN boundary"]
-    CORE["SW-CORE Layer 3 Switch\nSVIs + inter-VLAN routing"]
-    SWA["SW-ADMIN Access Switch\nAdmin and reception"]
-    SWO["SW-OPS Access Switch\nField operations and analysts"]
-    SWS["SW-SERVICES Access Switch\nServers, printers, AP"]
-    SWC["SW-CCTV Access Switch\nSegmented cameras"]
-    AP["Wireless AP\nTraining / guest Wi-Fi"]
-    DHCP["DHCP/DNS Server"]
-    FILE["File/Application Server"]
-    NVR["CCTV NVR Server"]
-    ADMIN["Admin + Reception PCs"]
-    SEC["Security Viewing PC"]
-    OPS["Field Operations / Data Capture PCs"]
-    ANALYST["GIS / Statistics Analyst PCs"]
-    PRN["Network Printers"]
-    CAM["IP CCTV Cameras"]
-
-    ISP --- EXT
-    ISP ---|WAN / outside| R1
-    R1 ---|inside routed transit| CORE
-    CORE ---|802.1Q trunk| SWA
-    CORE ---|802.1Q trunk| SWO
-    CORE ---|802.1Q trunk| SWS
-    CORE ---|802.1Q trunk| SWC
-    SWA --- ADMIN
-    SWA --- SEC
-    SWO --- OPS
-    SWO --- ANALYST
-    SWS --- DHCP
-    SWS --- FILE
-    SWS --- NVR
-    SWS --- PRN
-    SWS --- AP
-    SWC --- CAM
+```text
+External-Test-Server
+        |
+       R1
+        |
+    SW1-Core
+     /     \
+SW2-Access  SW3-Access
+ /  |  \     /  |  \
+Admin Field Finance HR Guest CCTV
 ```
 
-## Network Device Inventory
+## Device Inventory
 
-| Device name | Packet Tracer device type | Quantity | Role |
-| --- | --- | --- | --- |
-| R1 | ISR router, for example Cisco 2911 | 1 | Edge router, default route, NAT inside/outside boundary. |
-| SW-CORE | Multilayer switch, for example Cisco 3560 | 1 | VLAN gateways, inter-VLAN routing, ACL enforcement. |
-| SW-ADMIN | Access switch, for example Cisco 2960 | 1 | Administration, reception, and security viewing hosts. |
-| SW-OPS | Access switch, for example Cisco 2960 | 1 | Field operations, data capture, GIS, and statistics users. |
-| SW-SERVICES | Access switch, for example Cisco 2960 | 1 | Servers, printers, and wireless AP. |
-| SW-CCTV | Access switch, for example Cisco 2960 | 1 | CCTV camera access ports. |
-| DHCP/DNS server | Packet Tracer server | 1 | DHCP scopes and DNS services. |
-| File/application server | Packet Tracer server | 1 | Simulated internal office services. |
-| NVR server | Packet Tracer server | 1 | CCTV recording endpoint. |
-| Wireless AP | Packet Tracer wireless AP | 1 | Training/guest wireless access. |
-| PCs/laptops | Packet Tracer end devices | As needed | Staff, analysts, admin, and test hosts. |
-| IP cameras | Packet Tracer camera/end devices | 4 baseline | Segmented CCTV monitoring. |
-| Printers | Packet Tracer printers | 2 baseline | Shared printing. |
-
-## Link and Port Plan
-
-| Link | Type | Purpose |
+| Device | Model / type | Role |
 | --- | --- | --- |
-| ISP cloud/router to R1 | Routed WAN link | Simulates the outside network. |
-| R1 to SW-CORE | Routed internal transit link | Carries traffic from the LAN to the NAT edge. |
-| SW-CORE to each access switch | 802.1Q trunk | Carries required VLANs to the access layer. |
-| Access switch to PC/printer/camera/server | Access link | Places each endpoint in the correct VLAN. |
-| SW-SERVICES to wireless AP | Access link or trunk, depending on AP model | Provides training/guest wireless access. |
+| R1 | Cisco 2911 | Inter-VLAN routing, ACL enforcement, NAT/PAT edge |
+| SW1-Core | Cisco 2960-24TT | Core aggregation and trunk distribution |
+| SW2-Access | Cisco 2960-24TT | Admin, Field, Finance access |
+| SW3-Access | Cisco 2960-24TT | HR, Guest, CCTV access |
+| External-Test-Server | Packet Tracer Server-PT | Simulated external connectivity target |
+| PC-Admin | PC-PT | Administration and management test host |
+| PC-Field | PC-PT | Field endpoint |
+| PC-Finance | PC-PT | Finance endpoint |
+| PC-HR | PC-PT | HR endpoint |
+| PC-Guest | PC-PT | Restricted guest endpoint |
+| PC-CCTV | PC-PT | Restricted CCTV endpoint |
 
-## Physical Design Justification
+## Confirmed Access-Port Mapping
 
-This layout is intentionally practical. A government field office does not need an overcomplicated enterprise core, but it does need a network that can be explained, tested, and secured. The core/access structure gives the office a clear physical layout: traffic moves from endpoint switches to SW-CORE, then to R1 when it needs outside access.
+| Access switch | Port | Endpoint |
+| --- | --- | --- |
+| SW2-Access | Fa0/2 | PC-Admin |
+| SW2-Access | Fa0/3 | PC-Field |
+| SW2-Access | Fa0/4 | PC-Finance |
+| SW3-Access | Fa0/2 | PC-HR |
+| SW3-Access | Fa0/3 | PC-Guest |
+| SW3-Access | Fa0/4 | PC-CCTV |
 
-The CCTV access switch is kept separate because the design requires segmented camera traffic. In a real building this makes sense physically: cameras are often placed around entrances, corridors, and public areas, and grouping them helps with cabling, power, and troubleshooting.
+R1's internal trunk uses `GigabitEthernet0/1`. The final topology screenshot shows the required links active.
 
-NAT is placed on R1 because that is the natural inside/outside boundary. SW-CORE stays focused on internal routing and VLAN policy, which keeps the network design clear and operationally manageable.
+## Cabling and Link Roles
 
-## Physical Design Outcome
+- Endpoint-to-switch connections are Ethernet access links.
+- SW2-Access and SW3-Access uplinks to SW1-Core are 802.1Q trunks.
+- SW1-Core to R1 carries the VLAN trunk required for router-on-a-stick.
+- R1 to External-Test-Server represents the external/WAN-side test segment.
 
-- All major devices are named and assigned a purpose.
-- Physical links show the difference between WAN, routed transit, trunks, and access ports.
-- The topology includes CCTV segmentation as part of the main design.
-- The design is realistic for a field office and manageable in Cisco Packet Tracer.
-- The device inventory establishes a clear equipment baseline.
+## Deployment Considerations
+
+A real site should document exact patch-panel, rack, switch-port, cable-ID, power/UPS, and physical-security details. Production access switches should also be selected according to PoE, port-density, redundancy, and environmental requirements rather than solely Packet Tracer availability.
