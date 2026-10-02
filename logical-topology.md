@@ -1,112 +1,63 @@
 # Logical Topology
 
-Project: **Stats SA Mafikeng Field Office Network Design**
+## Architecture
 
-Prepared by: **Kudzai Mudzingwa**
-
-Status: **Complete**
-
-## Logical Design
+The implemented network uses **router-on-a-stick** inter-VLAN routing on R1. SW1-Core aggregates SW2-Access and SW3-Access through 802.1Q trunks. Endpoints connect to access ports assigned to their functional VLANs.
 
 ```mermaid
-flowchart LR
-    subgraph INSIDE["Inside network: 172.30.66.0/23"]
-        VLAN10["VLAN 10\nManagement\n172.30.66.0/27"]
-        VLAN20["VLAN 20\nServers\n172.30.66.32/27"]
-        VLAN30["VLAN 30\nAdmin / Reception\n172.30.66.64/26"]
-        VLAN40["VLAN 40\nField Operations\n172.30.66.128/25"]
-        VLAN50["VLAN 50\nGIS / Statistics\n172.30.67.0/26"]
-        VLAN60["VLAN 60\nTraining / Guest Wi-Fi\n172.30.67.64/27"]
-        VLAN70["VLAN 70\nPrinters\n172.30.67.96/28"]
-        VLAN80["VLAN 80\nCCTV\n172.30.67.128/27"]
-        VLAN99["VLAN 99\nCore-to-Edge Transit\n172.30.67.112/30"]
-    end
-
-    CORE["SW-CORE\nSVIs, routing, ACLs"]
-    R1["R1 Edge Router\nNAT inside/outside"]
-    ISP["ISP / Internet simulation"]
-    EXT["External test server\n198.51.100.10"]
-    NVR["CCTV NVR\n172.30.66.40"]
-    ADMINPC["Security viewing PC\n172.30.66.66"]
-
-    VLAN10 --> CORE
-    VLAN20 --> CORE
-    VLAN30 --> CORE
-    VLAN40 --> CORE
-    VLAN50 --> CORE
-    VLAN60 --> CORE
-    VLAN70 --> CORE
-    VLAN80 --> CORE
-    VLAN99 --> CORE
-    VLAN20 --> NVR
-    VLAN30 --> ADMINPC
-    VLAN80 -. "permit CCTV to NVR only" .-> NVR
-    ADMINPC -. "permit authorized viewing" .-> NVR
-    CORE -->|default route| R1
-    R1 -->|PAT overload| ISP
-    ISP --> EXT
+flowchart TB
+  EXT["External Test Server\n203.0.113.10"] --- R1["R1 Cisco 2911\nRouting + NAT/PAT + ACLs"]
+  R1 --- CORE["SW1-Core Cisco 2960"]
+  CORE --- SW2["SW2-Access Cisco 2960"]
+  CORE --- SW3["SW3-Access Cisco 2960"]
+  SW2 --- ADMIN["PC-Admin\nVLAN 10"]
+  SW2 --- FIELD["PC-Field\nVLAN 20"]
+  SW2 --- FIN["PC-Finance\nVLAN 30"]
+  SW3 --- HR["PC-HR\nVLAN 40"]
+  SW3 --- GUEST["PC-Guest\nVLAN 50"]
+  SW3 --- CCTV["PC-CCTV\nVLAN 60"]
 ```
 
-## VLAN Plan
+## VLAN and Routing Model
 
-| VLAN | Name | Purpose | Gateway |
-| --- | --- | --- | --- |
-| 10 | Network Management | Router, switch, and AP management interfaces. | `172.30.66.1` |
-| 20 | Servers and Core Services | DHCP, DNS, file/app services, and CCTV NVR. | `172.30.66.33` |
-| 30 | Administration and Reception | Office admin, reception, and authorized security viewing workstation. | `172.30.66.65` |
-| 40 | Field Operations / Data Capture | Main operational users who capture and process field data. | `172.30.66.129` |
-| 50 | GIS / Statistical Analysis | Specialist users who need reliable access to internal services. | `172.30.67.1` |
-| 60 | Training / Guest Wi-Fi | Temporary or non-sensitive wireless access. | `172.30.67.65` |
-| 70 | Printers and Shared Devices | Shared printers and small office network devices. | `172.30.67.97` |
-| 80 | CCTV Cameras | IP cameras added by the change request. | `172.30.67.129` |
-| 99 | Core-to-Edge Transit | Routed link between SW-CORE and R1. | Point-to-point |
+| VLAN | Security / business zone | Gateway |
+| ---: | --- | --- |
+| 10 | Administration | `192.168.10.1` |
+| 20 | Field | `192.168.20.1` |
+| 30 | Finance | `192.168.30.1` |
+| 40 | Human Resources | `192.168.40.1` |
+| 50 | Guest | `192.168.50.1` |
+| 60 | CCTV | `192.168.60.1` |
+| 99 | Infrastructure management | `192.168.99.1` |
 
-## Routing Design
+R1 terminates the VLANs as 802.1Q subinterfaces on `GigabitEthernet0/1`. The external interface `GigabitEthernet0/0` is `203.0.113.1`.
 
-| Route type | Location | Detail |
+## Security Policy
+
+| Source | Destination | Policy |
 | --- | --- | --- |
-| Inter-VLAN routing | SW-CORE | SVIs provide gateways for VLANs 10, 20, 30, 40, 50, 60, 70, and 80. |
-| Default route | SW-CORE | `0.0.0.0/0` points to R1 inside interface `172.30.67.114`. |
-| Return route | R1 | Route back to `172.30.56.0/23` through SW-CORE `172.30.67.113`. |
-| Outside route | R1 | Default route points to ISP router `203.0.113.1`. |
+| Guest VLAN 50 | Admin, Field, Finance, HR, CCTV, management | Deny |
+| Guest VLAN 50 | External test network | Permit |
+| CCTV VLAN 60 | Admin, Field, Finance, HR, Guest, management | Deny |
+| CCTV VLAN 60 | External test network | Permit |
+| Authorized Admin | Switch management addresses | Permit SSH |
 
-## NAT Inside/Outside Design
+The inbound `GUEST-ISOLATION` and `CCTV-ISOLATION` ACLs enforce these restrictions on R1. Behavioral tests and ACL counters confirmed both deny and permit paths.
 
-| NAT item | Design value |
-| --- | --- |
-| NAT inside networks | `172.30.66.0/23` |
-| NAT inside interface | R1 interface facing SW-CORE, `172.30.67.114` |
-| NAT outside interface | R1 interface facing ISP, `203.0.113.2` |
-| NAT method | PAT overload |
-| NAT ACL wildcard | `permit 172.30.66.0 0.0.1.255` |
-| Verification target | External test server `198.51.100.10` |
+## NAT/PAT
 
-PAT overload allows many internal devices to share one simulated outside address. This matches a normal small-office edge design and satisfies the NAT inside/outside translation requirement.
+R1 provides the simulated edge translation service. Internal business VLANs are classified as NAT inside; `GigabitEthernet0/0` is NAT outside. Verification showed active dynamic translations and non-zero NAT hit counters.
 
-## Logical Security Policy
+## Management Plane
 
-| Source | Destination | Policy | Reason |
-| --- | --- | --- | --- |
-| Management VLAN | Router and switches | Permit SSH from authorized admin hosts. | Prevents casual or accidental access to device administration. |
-| User VLANs | Servers | Permit required services such as DNS, DHCP, file/app, and NVR viewing where authorized. | Supports normal office work. |
-| User VLANs | Internet | Permit through R1 NAT/PAT. | Allows external access while hiding internal addresses. |
-| CCTV VLAN | NVR `172.30.66.40` | Permit required camera/NVR traffic. | Required for recording and monitoring. |
-| CCTV VLAN | User VLANs | Deny. | Satisfies the CCTV segmentation change request. |
-| CCTV VLAN | Internet | Deny by default. | Reduces unnecessary camera exposure. |
-| Guest/Training VLAN | Internal VLANs | Deny except DHCP/DNS if provided internally. | Keeps temporary users away from office resources. |
-| Guest/Training VLAN | Internet | Permit through NAT/PAT. | Allows limited outside access. |
-| Printers VLAN | User VLANs | Permit user-to-printer traffic, restrict printer-initiated access. | Supports printing while limiting unnecessary cross-network movement. |
+VLAN 99 separates infrastructure management from user networks. The switch management addresses are:
 
-## Access Control Placement
+- SW1-Core — `192.168.99.2`
+- SW2-Access — `192.168.99.3`
+- SW3-Access — `192.168.99.4`
 
-- CCTV ACLs are placed close to VLAN 80, preferably on the VLAN 80 SVI inbound direction.
-- Guest/training restrictions are placed on VLAN 60 inbound.
-- Management restrictions are placed on VTY lines and, where useful, with ACLs allowing only trusted admin source IPs.
-- NAT ACLs belong on R1 because R1 owns the inside/outside boundary.
+SSH is used for remote management. PC-Admin successfully established an SSH session to SW1-Core during testing.
 
-## Logical Design Outcome
+## Design Boundary
 
-- The logical layout clearly separates the office into security and operational zones.
-- NAT, CCTV segmentation, management security, and internal services are all shown.
-- The VLAN plan matches the physical topology and the IP addressing plan.
-- The design is complete, structured, and directly implementable in Cisco Packet Tracer.
+This logical topology documents the Packet Tracer implementation actually built and tested. Production deployment would additionally require enterprise firewalling, centralized AAA, monitoring/logging, configuration backups, redundancy, and an approved organizational addressing plan.
