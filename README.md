@@ -78,7 +78,6 @@ DHCP, a dedicated inter-VLAN evidence capture, and a final routing-table screens
 ├── README.md
 ├── SUBMISSION.md
 ├── technical-report.md
-├── inset-video-script.md
 ├── client-requirements.md
 ├── physical-topology.md
 ├── logical-topology.md
@@ -95,4 +94,4 @@ The Packet Tracer file is the authoritative implementation artifact. The Markdow
 
 ## Review
 
-See [SUBMISSION.md](SUBMISSION.md) for the handover summary, [technical-report.md](technical-report.md) for the formal report, [inset-video-script.md](inset-video-script.md) for the timed demonstration script, and [testing-evidence.md](testing-evidence.md) for verification results and evidence gaps.
+See [SUBMISSION.md](SUBMISSION.md) for the handover summary, [technical-report.md](technical-report.md) for the formal report, and [testing-evidence.md](testing-evidence.md) for verification results and evidence gaps.
