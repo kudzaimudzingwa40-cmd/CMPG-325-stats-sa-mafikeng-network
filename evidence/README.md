@@ -1,15 +1,10 @@
 # Evidence Register
 
-This directory contains the Packet Tracer evidence associated with the implementation.
+This directory contains the existing Packet Tracer screenshots associated with the project. These images were organized without editing their contents.
 
-| Evidence area | Recorded result |
-| --- | --- |
-| Management reachability | SW1/SW2/SW3 management addresses reachable from PC-Admin |
-| SSH management | Successful PC-Admin session to SW1-Core |
-| Guest isolation | Gateway and external access successful; Admin access blocked |
-| CCTV isolation | Gateway and external access successful; Admin access blocked |
-| NAT/PAT | Four dynamic translations and 12 hits observed |
-| ACL counters | Guest and CCTV permit/deny matches recorded |
-| Final topology | Completed topology captured in Packet Tracer |
+| Screenshot | What it visibly shows | Evidence note |
+|---|---|---|
+| [Existing topology view](existing-topology-view.png) | Packet Tracer logical workspace with the router, switches, endpoints, and external server. | The title bar shows a local file named project.pkt. Confirm it matches the submitted StatsSA-Mafikeng-Network.pkt before using it as final topology-state evidence.
+| [Management and SSH session](management-ssh-session.png) | PC-Admin ping output for 192.168.99.4 and a later SW1-Core SSH prompt. | Failed login/timeout attempts are visible before the successful prompt. The image is not a DHCP, inter-VLAN, or routing-table capture.
 
-Detailed results are documented in ../testing-evidence.md.
+The project test record separately reports results for management reachability, SSH, Guest/CCTV restrictions, external reachability, and NAT/ACL counters. See [testing-evidence.md](../testing-evidence.md) for the recorded outcomes and outstanding test captures.
