@@ -82,8 +82,7 @@ DHCP, a dedicated inter-VLAN evidence capture, and a final routing-table screens
 ├── logical-topology.md
 ├── ip-addressing-plan.md
 ├── testing-evidence.md
-├── packet-tracer/
-│   └── StatsSA-Mafikeng-Network.pkt
+├── StatsSA-Mafikeng-Network.pkt
 └── evidence/
     └── README.md
 ```
