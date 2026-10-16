@@ -17,7 +17,6 @@ This project implements a segmented field-office network using VLANs, router-on-
 | --- | --- |
 | Packet Tracer implementation | [StatsSA-Mafikeng-Network.pkt](StatsSA-Mafikeng-Network.pkt) |
 | Technical report | [technical-report.md](technical-report.md) |
-| INSET video demonstration | Recording to be submitted separately; the video and script are not stored in this repository. |
 | Client requirements | [client-requirements.md](client-requirements.md) |
 | Physical topology | [physical-topology.md](physical-topology.md) |
 | Logical topology | [logical-topology.md](logical-topology.md) |
@@ -25,7 +24,7 @@ This project implements a segmented field-office network using VLANs, router-on-
 | Testing and verification | [testing-evidence.md](testing-evidence.md) and [evidence/](evidence/) |
 | GitHub portfolio | This repository |
 
-The INSET video will be recorded and submitted separately. Current evidence gaps and items requiring confirmation are listed in the technical report and testing register.
+Current evidence gaps and items requiring confirmation are listed in the technical report and testing register.
 
 ## Implemented Features
 
