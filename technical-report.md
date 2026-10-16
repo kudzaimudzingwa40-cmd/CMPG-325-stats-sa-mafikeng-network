@@ -140,7 +140,7 @@ The following table reproduces the recorded outcomes in the repository's test re
 
 The recorded Packet Tracer project demonstrates a segmented field-office design with seven VLANs, router-on-a-stick routing, Guest and CCTV access-control policies, simulated external connectivity through NAT/PAT, and a dedicated management VLAN with SSH access to the core switch. The existing results support the specific management, gateway, Guest/CCTV-to-Admin, external-test, NAT-counter, and ACL-counter claims listed in this report. They do not establish unrecorded DHCP behavior, a dedicated inter-VLAN test result, final routing-table state, or production suitability.
 
-The most important pre-submission actions are to reconcile VLAN 99 NAT documentation, capture the outstanding evidence, and clearly label the existing screenshots. This keeps the portfolio technically defensible and makes the video demonstration consistent with what was actually tested.
+The most important pre-submission actions are to reconcile VLAN 99 NAT documentation, capture the outstanding evidence, and clearly label the existing screenshots. This keeps the portfolio technically defensible.
 
 ## Project references
 
