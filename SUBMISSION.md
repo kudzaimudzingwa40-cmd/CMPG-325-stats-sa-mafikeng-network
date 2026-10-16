@@ -15,7 +15,7 @@ This project implements a segmented field-office network using VLANs, router-on-
 
 | Deliverable | Project evidence |
 | --- | --- |
-| Packet Tracer implementation | packet-tracer/StatsSA-Mafikeng-Network.pkt |
+| Packet Tracer implementation | StatsSA-Mafikeng-Network.pkt |
 | Client requirements | client-requirements.md |
 | Physical topology | physical-topology.md |
 | Logical topology | logical-topology.md |
