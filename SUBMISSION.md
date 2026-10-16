@@ -15,13 +15,17 @@ This project implements a segmented field-office network using VLANs, router-on-
 
 | Deliverable | Project evidence |
 | --- | --- |
-| Packet Tracer implementation | StatsSA-Mafikeng-Network.pkt |
-| Client requirements | client-requirements.md |
-| Physical topology | physical-topology.md |
-| Logical topology | logical-topology.md |
-| IP addressing plan | ip-addressing-plan.md |
-| Testing and verification | testing-evidence.md and evidence/ |
+| Packet Tracer implementation | [StatsSA-Mafikeng-Network.pkt](StatsSA-Mafikeng-Network.pkt) |
+| Technical report | [technical-report.md](technical-report.md) |
+| INSET video demonstration | [inset-video-script.md](inset-video-script.md) (recording script; video still to be recorded) |
+| Client requirements | [client-requirements.md](client-requirements.md) |
+| Physical topology | [physical-topology.md](physical-topology.md) |
+| Logical topology | [logical-topology.md](logical-topology.md) |
+| IP addressing plan | [ip-addressing-plan.md](ip-addressing-plan.md) |
+| Testing and verification | [testing-evidence.md](testing-evidence.md) and [evidence/](evidence/) |
 | GitHub portfolio | This repository |
+
+The video script is a guide for recording the demonstration; it is not a completed video file. Current evidence gaps and items requiring confirmation are listed in the technical report and testing register.
 
 ## Implemented Features
 
