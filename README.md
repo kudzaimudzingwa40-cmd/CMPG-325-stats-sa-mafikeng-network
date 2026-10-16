@@ -85,7 +85,9 @@ DHCP, a dedicated inter-VLAN evidence capture, and a final routing-table screens
 ├── testing-evidence.md
 ├── StatsSA-Mafikeng-Network.pkt
 └── evidence/
-    └── README.md
+    ├── README.md
+    ├── existing-topology-view.png
+    └── management-ssh-session.png
 ```
 
 ## Operational Notes
